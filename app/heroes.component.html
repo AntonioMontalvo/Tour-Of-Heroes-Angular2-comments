@@ -1,0 +1,38 @@
+<h2>My Heroes</h2>
+<div>
+  <label>Hero name:</label> <input #heroName />
+  <button (click)="add(heroName.value); heroName.value=''">
+    Add
+  </button>
+</div>
+<ul class="heroes">
+
+  <li *ngFor="let hero of heroes" (click)="onSelect(hero)"
+      [class.selected]="hero === selectedHero">
+    <span class="badge">{{hero.id}}</span>
+    <span>{{hero.name}}</span>
+    <button class="delete"
+      (click)="delete(hero); $event.stopPropagation()">x</button>
+  </li>
+
+</ul>
+<div *ngIf="selectedHero">
+  <h2>
+    {{selectedHero.name | uppercase}} is my hero
+  </h2>
+  <button (click)="gotoDetail()">View Details</button>
+</div>
+
+<!-- AngularJS directives are extended HTML attributes with the prefix ng-. The (*) prefix to ngFor indicates that the <li> element and its children constitute a master template.
+
+         //The ngFor directive iterates over the heroes array returned by the AppComponent.heroes property. The quoted text assigned to ngFor means “take each hero in the heroes array, store it in the local hero variable, and make it available to the corresponding template instance”.The let keyword before "hero" identifies hero as a template input variable.
+
+         //We have a click event and a method onSelect() passing hero as argument
+
+         //When there is no selectedHero, the ngIf directive removes the hero detail HTML from the DOM. When the user picks a hero, selectedHero becomes "truthy" and ngIf puts the hero detail content into the DOM and evaluates the nested bindings.
+
+         //Applying the selected CSS class to the appropriate <li>. We’ll add a property binding on class for the selected class to the template. We'll set this to an expression that compares the current selectedHero to the hero. The key is the name of the CSS class (selected). The value is true if the two heroes match and false otherwise. We’re saying “apply the selected class if the heroes match, remove it if they don’t”. Notice in the template that the class.selected is surrounded in square brackets ([]). This is the syntax for a property binding, a binding in which data flows one way from the data source (the expression hero === selectedHero) to a property of class.
+
+         //ngIf and ngFor are called “structural directives” because they can change the structure of portions of the DOM. In other words, they give structure to the way Angular displays content in the DOM.
+
+ -->

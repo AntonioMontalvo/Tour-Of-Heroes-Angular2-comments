@@ -1,0 +1,12 @@
+<h3>Top Heroes</h3>
+<div class="grid grid-pad">
+  <a *ngFor="let hero of heroes"  [routerLink]="['/detail', hero.id]"  class="col-1-4">
+    <div class="module hero">
+      <h4>{{hero.name}}</h4>
+    </div>
+  </a>
+</div>
+<hero-search></hero-search>
+
+<!-- We use *ngFor once again to iterate over a list of heroes and display their names -->
+<!-- Notice the [routerLink] binding. This time, we're binding to an expression containing a link parameters array. The array has two elements, the path of the destination route and a route parameter set to the value of the current hero's id. -->

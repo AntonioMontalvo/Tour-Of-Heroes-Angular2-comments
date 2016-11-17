@@ -1,0 +1,20 @@
+<div *ngIf="hero">
+  <h2>{{hero.name}} details!</h2>
+  <div>
+    <label>id: </label>{{hero.id}}</div>
+  <div>
+    <label>name: </label>
+    <input [(ngModel)]="hero.name" placeholder="name" />
+   </div>
+  <button (click)="goBack()">Back</button>
+  <button (click)="save()">Save</button>
+</div>
+
+<!-- Two-Way Binding
+We intend to display the name of the hero in the <input>, change it, and see those changes wherever we bind to the hero’s name. In short, we want two-way data binding. -->
+
+<!-- AngularJS directives are extended HTML attributes with the prefix ng-.  We use the ngModel built-in directive for two-way binding. -->
+
+<!-- Let's ensure that edits to a hero's name aren't lost. Start by adding, to the end of the hero detail template, a save button with a click event binding that invokes a new component method named save: -->
+
+    		  

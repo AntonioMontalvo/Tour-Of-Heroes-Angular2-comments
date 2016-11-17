@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <!-- <base href="/"> -->
+    <script>document.write('<base href="' + document.location + '" />');</script>
+
+    <title>Angular QuickStart</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script src="systemjs.config.js"></script>
+    <script>
+      System.import('app').catch(function(err){ console.error(err); });
+    </script>
+  </head>
+
+  <body>
+    <my-app>
+       <h1>{{title}}</h1>
+        <nav>
+          <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+          <a routerLink="/heroes" routerLinkActive="active">Heroes</a>
+        </nav>
+        <!-- router-outlet is where the content of /dashboard ot /heroes will be displayed -->
+        <router-outlet>
+        <!-- by default /dashboard shows the DashboardCompponent the first time on load -->
+            <h3>Top Heroes</h3>
+            <div class="grid grid-pad">
+              <a *ngFor="let hero of heroes"  [routerLink]="['/detail', hero.id]"  class="col-1-4">
+                <div class="module hero">
+                  <h4>{{hero.name}}</h4>
+                </div>
+              </a>
+            </div>
+            <!-- hero-search displays the hero search  search box -->
+                <hero-search>
+                    <div id="search-component">
+                      <h4>Hero Search</h4>
+                      <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
+                      <div>
+                        <div *ngFor="let hero of heroes | async"
+                             (click)="gotoDetail(hero)" class="search-result" >
+                          {{hero.name}}
+                        </div>
+                      </div>
+                    </div>
+                </hero-search>
+        <!-- if /heroes, then router-outlet  shows the HeroesComponent -->
+            <h2>My Heroes</h2>
+            <div>
+              <label>Hero name:</label> <input #heroName />
+              <button (click)="add(heroName.value); heroName.value=''">
+                Add
+              </button>
+            </div>
+            <ul class="heroes">
+
+              <li *ngFor="let hero of heroes" (click)="onSelect(hero)"
+                  [class.selected]="hero === selectedHero">
+                <span class="badge">{{hero.id}}</span>
+                <span>{{hero.name}}</span>
+                <button class="delete"
+                  (click)="delete(hero); $event.stopPropagation()">x</button>
+              </li>
+
+            </ul>
+            <div *ngIf="selectedHero">
+              <h2>
+                {{selectedHero.name | uppercase}} is my hero
+              </h2>
+              <button (click)="gotoDetail()">View Details</button>
+            </div>
+
+            
+
+        </router-outlet>
+    </my-app>
+  </body>
+</html>
